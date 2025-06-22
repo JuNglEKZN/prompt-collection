@@ -8,6 +8,7 @@
 </head>
 <body>
   <h1>Коллекция промптов</h1>
+  <input type="text" id="search" placeholder="Поиск по названию...">
   <nav id="nav"></nav>
   <main id="content">Выберите промпт слева</main>
 
@@ -15,11 +16,18 @@
   <script>
     const nav = document.getElementById('nav');
     const content = document.getElementById('content');
+    const search = document.getElementById('search');
+    let allEntries = [];
 
     async function loadList() {
       const response = await fetch('prompts_list.json');
       const list = await response.json();
+      allEntries = list;
+      renderList(list);
+    }
 
+    function renderList(list) {
+      nav.innerHTML = "";
       for (const entry of list) {
         const link = document.createElement('a');
         link.href = `#${entry.path}`;
@@ -38,6 +46,12 @@
     if (location.hash) {
       loadMarkdown(location.hash.slice(1));
     }
+
+    search.addEventListener('input', () => {
+      const query = search.value.toLowerCase();
+      const filtered = allEntries.filter(e => e.title.toLowerCase().includes(query));
+      renderList(filtered);
+    });
 
     loadList();
   </script>
