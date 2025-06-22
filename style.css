@@ -1,0 +1,40 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 1em;
+  max-width: 900px;
+  margin: auto;
+  background: #f4f4f4;
+}
+
+h1 {
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin: 1em 0;
+}
+
+nav a {
+  background: #fff;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #333;
+}
+
+nav a:hover {
+  background: #e0e0e0;
+}
+
+#content {
+  background: #fff;
+  padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  min-height: 200px;
+}

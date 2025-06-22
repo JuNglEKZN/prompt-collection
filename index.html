@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Коллекция промптов</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <h1>Коллекция промптов</h1>
+  <nav id="nav"></nav>
+  <main id="content">Выберите промпт слева</main>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    const nav = document.getElementById('nav');
+    const content = document.getElementById('content');
+
+    async function loadList() {
+      const response = await fetch('prompts_list.json');
+      const list = await response.json();
+
+      for (const entry of list) {
+        const link = document.createElement('a');
+        link.href = `#${entry.path}`;
+        link.textContent = entry.title;
+        link.onclick = () => loadMarkdown(entry.path);
+        nav.appendChild(link);
+      }
+    }
+
+    async function loadMarkdown(path) {
+      const res = await fetch('prompts/' + path);
+      const text = await res.text();
+      content.innerHTML = marked.parse(text);
+    }
+
+    if (location.hash) {
+      loadMarkdown(location.hash.slice(1));
+    }
+
+    loadList();
+  </script>
+</body>
+</html>
